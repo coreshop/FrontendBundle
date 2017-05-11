@@ -1,0 +1,72 @@
+{% import "@CoreShopFrontend/Common/Macro/currency.html.twig" as currency %}
+
+
+<div id="cart" class="btn-group btn-block">
+    <button type="button" data-toggle="dropdown" class="btn btn-block btn-lg dropdown-toggle">
+        <i class="fa fa-shopping-cart"></i>
+        <!-- TODO: Currency Format and Conversion!!!! -->
+        <span id="cart-overview-total">
+            <span class="cart-badge">{% if cart.getItems() %} {{ cart.getItems()|length }} {% else %} 0 {% endif %}</span> {{ 'items'|trans }} -
+            <span class="cart-total"> {{ currency.convertAndFormat(cart.getTotal) }}</span></span>
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <ul class="dropdown-menu pull-right">
+        <li>
+            {% if cart.hasItems() %}
+            <table class="table hcart cart-items">
+                {% for item in cart.getItems() %}
+                    <tr>
+                        <td class="text-center">
+                            {% if item.getProduct() %}
+                            <a href="{{ path('coreshop_shop_product_detail', {name: item.getProduct().getName, productId: item.getProduct().getId}) }}">
+                                {% if item.getProduct() and item.getProduct().getImage() %}
+                                    {{ item.product.image.thumbnail("coreshop_productCartPreview").html({'class': 'img-thumbnail img-responsive', 'title': item.getProduct().getName(), 'alt': item.getProduct().getName()})|raw }}
+                                {% endif %}
+                            </a>
+                            {% endif %}
+                        </td>
+                        <td class="text-left">
+                            {% if item.getProduct() %}
+                            <a href="{{ path('coreshop_shop_product_detail', {name: item.getProduct().getName, productId: item.getProduct().getId}) }}">
+                                {{ item.getProduct().getName() }}
+                            </a>
+                            {% endif %}
+                        </td>
+                        <td class="text-right">x {{ item.getQuantity() }}</td>
+                        <td class="text-right">{{ currency.convertAndFormat(item.getTotal) }}</td>
+                        <td class="text-center">
+                            {% if not item.isGiftItem %}
+                                <a href="{{ path('coreshop_shop_remove_cart_item', {cartItemId: item.getId}) }}" class="removeFromCart" data-id="{{ item.getId() }}" data-refresh="true">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </li>
+        <li>
+            <table class="table table-bordered total">
+                <tbody>
+                <tr>
+                    <td class="text-right"><strong>{{ 'subotal'|trans }}</strong></td>
+                    <td class="text-left cart-subtotal">{{ currency.convertAndFormat(cart.subtotal) }}</td>
+                </tr>
+                <tr>
+                    <td class="text-right"><strong>{{ 'total'|trans }}</strong></td>
+                    <td class="text-left cart-total">{{ currency.convertAndFormat(cart.getTotal) }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="text-right btn-block1">
+                <a href="{{ path('coreshop_shop_cart_summary') }}">
+                    {{ 'cart'|trans }}
+                </a>
+                <a href="{{ path('coreshop_shop_checkout', {'stepIdentifier': 'cart'}) }}">
+                    {{ 'checkout'|trans }}
+                </a>
+            </p>
+        </li>
+    </ul>
+</div>

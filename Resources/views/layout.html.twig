@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="{{ app.request.locale|slice(0, 2) }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% block title %}CoreShop{% endblock %}</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    {% block metatags %}
+    {% endblock %}
+
+    {% block stylesheets %}
+        {% include '@CoreShopFrontend/_stylesheets.html.twig' with {'path': 'static/coreshop/css/shop.css'} %}
+        {% include '@CoreShopFrontend/_stylesheets.html.twig' with {'path': 'static/coreshop/css/owl.carousel.css'} %}
+    {% endblock %}
+</head>
+
+<body class="pushable">
+<div class="pusher">
+    <div class="ui container">
+        {% block header %}
+            <header>
+                {% include '@CoreShopFrontend/_header.html.twig' %}
+
+                <!-- TODO: Render Url -->
+            </header>
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    {% block footer %}
+        {% include '@CoreShopFrontend/_footer.html.twig' %}
+    {% endblock %}
+</div>
+
+{% block javascripts %}
+    {% include '@CoreShopFrontend/_javascripts.html.twig' with {'path': 'static/coreshop/js/vendor/jquery-1.11.1.min.js'} %}
+    {% include '@CoreShopFrontend/_javascripts.html.twig' with {'path': 'static/coreshop/js/vendor/bootstrap.min.js'} %}
+    {% include '@CoreShopFrontend/_javascripts.html.twig' with {'path': 'static/coreshop/js/vendor/owl.carousel.min.js'} %}
+    {% include '@CoreShopFrontend/_javascripts.html.twig' with {'path': 'static/coreshop/js/custom.js'} %}
+    {% include '@CoreShopFrontend/_javascripts.html.twig' with {'path': 'static/coreshop/js/shop.js'} %}
+{% endblock %}
+{{ coreshop.store }}
+{{ coreshop.currency.isoCode }}
+{{ coreshop.localeCode }}
+{{ coreshop.country }}
+</body>
+</html>

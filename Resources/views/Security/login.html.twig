@@ -1,0 +1,7 @@
+{% extends '@CoreShopFrontend/layout-full.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% import '@CoreShopFrontend/Common/Macro/messages.html.twig' as messages %}
+
+{% block center %}
+    {% include 'CoreShopFrontendBundle:Security:_login-form.html.twig' %}
+{% endblock %}

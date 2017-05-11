@@ -1,0 +1,11 @@
+<div class="btn-group">
+    <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+        {{ 'currency'|trans }}
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <ul class="pull-right dropdown-menu">
+        {% for currency in currencies %}
+            <li><a tabindex="-1" href="{{ path('coreshop_shop_switch_currency', {'currencyCode': currency.getIsoCode}) }}">{{ currency.getName() }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
