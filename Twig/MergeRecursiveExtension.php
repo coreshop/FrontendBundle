@@ -12,14 +12,22 @@
 
 declare(strict_types=1);
 
-namespace CoreShop\Bundle\FrontendBundle\Controller;
+namespace CoreShop\Bundle\FrontendBundle\Twig;
 
-use Symfony\Component\HttpFoundation\Request;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class IndexController extends FrontendController
+final class MergeRecursiveExtension extends AbstractExtension
 {
-    public function indexAction(Request $request)
+    public function getFilters(): array
     {
-        return $this->renderTemplate($this->templateConfigurator->findTemplate('Index/index.html'));
+        return [
+            new TwigFilter(
+                'coreshop_merge_recursive',
+                function (array $firstArray, array $secondArray): array {
+                    return array_merge_recursive($firstArray, $secondArray);
+                }
+            ),
+        ];
     }
 }
